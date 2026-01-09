@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ru.home.video.controller.MainController"
+      spacing="15"
+      alignment="TOP_CENTER"
+      style="-fx-padding: 20;">
+
+    <!-- headings -->
+    <Label text="🎬 Video subtitle provider"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <Label text="Adds subtitles to the original video"
+           style="-fx-font-size: 14px; -fx-text-fill: gray;"/>
+
+    <Separator/>
+
+    <!-- Form content -->
+    <VBox spacing="10">
+        <!-- Видео файл -->
+        <VBox spacing="5">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Video file:" prefWidth="130"/>
+                <TextField fx:id="inputVideoFilePath" promptText="Select file..." prefWidth="300"/>
+                <Button text="Review" onAction="#handleBrowseInput"/>
+            </HBox>
+            <Label text="(Supported formats: MP4, AVI, MOV, MKV, WMV)"
+                   style="-fx-text-fill: green; -fx-font-size: 11px; -fx-padding: 0 0 0 140;"/>
+        </VBox>
+
+        <!-- folder for saving a new video file -->
+        <VBox spacing="10">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Save folder:" prefWidth="130"/>
+                <TextField fx:id="outputVideoFilePath" promptText="Where to save..." prefWidth="300"/>
+                <Button text="Review" onAction="#handleBrowseOutput"/>
+            </HBox>
+            <Label text="(Path to the new video with added subtitles)"
+                   style="-fx-text-fill: green; -fx-font-size: 11px; -fx-padding: 0 0 0 140;"/>
+        </VBox>
+    </VBox>
+
+    <!-- settings of subtitles -->
+    <GridPane hgap="10" vgap="8">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="130" halignment="RIGHT"/>
+            <ColumnConstraints prefWidth="200"/>
+            <ColumnConstraints prefWidth="130" halignment="RIGHT"/>
+            <ColumnConstraints prefWidth="200"/>
+        </columnConstraints>
+
+        <!-- language of subtitles, it is being adjusted by LanguageConfig java class -->
+        <Label text="Subtitle language:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="languageCombo" prefWidth="200" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <!-- size of subtitles -->
+        <Label text="Font size:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+        <ComboBox fx:id="fontSizeCombo" prefWidth="200" GridPane.rowIndex="0" GridPane.columnIndex="3">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Small"/>
+                    <String fx:value="Medium"/>
+                    <String fx:value="Large"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <!-- color of subtitles -->
+        <Label text="Text color:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ColorPicker fx:id="textColorPicker" prefWidth="200" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <!-- transparency -->
+        <Label text="Transparency:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+        <HBox spacing="5" GridPane.rowIndex="1" GridPane.columnIndex="3" alignment="CENTER_LEFT">
+            <Slider fx:id="opacitySlider" max="80" value="5"
+                    showTickMarks="true"
+                    minorTickCount="5"
+                    prefWidth="175"/>
+            <Label fx:id="opacityValueLabel" text="80%" style="-fx-min-width: 40;"/>
+        </HBox>
+
+        <!-- location on screen -->
+        <Label text="Location:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="positionCombo" prefWidth="200" GridPane.rowIndex="2" GridPane.columnIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Below"/>
+                    <String fx:value="Top"/>
+                    <String fx:value="Center"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <!-- background color -->
+        <Label text="Background color:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+        <ColorPicker fx:id="backgroundColorPicker" prefWidth="200" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+    </GridPane>
+
+    <!-- buttons and progress - by centre -->
+    <VBox spacing="10" alignment="TOP_CENTER" style="-fx-padding: 20 0 0 0;">
+        <!-- Кнопки -->
+        <HBox spacing="12" alignment="TOP_CENTER">
+            <Button text="🚀 Start" onAction="#handleStartProcessing"
+                    style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            <Button text="Clean" onAction="#handleClearForm"
+                    style="-fx-background-color: #f39c12; -fx-text-fill: white;"/>
+            <Button text="Exit" onAction="#handleExit"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+        </HBox>
+
+        <!-- progress -->
+        <VBox spacing="5" alignment="TOP_CENTER" style="-fx-padding: 10 0 0 0;">
+            <ProgressBar fx:id="progressBar" prefWidth="650"/>
+            <Label fx:id="progressLabel" text="Ready to go"/>
+        </VBox>
+    </VBox>
+
+</VBox>
