@@ -1,0 +1,7 @@
+#!C:\Users\User\Python\Python312\python.exe
+
+from argostranslate import cli
+
+cli.main()
+
+
